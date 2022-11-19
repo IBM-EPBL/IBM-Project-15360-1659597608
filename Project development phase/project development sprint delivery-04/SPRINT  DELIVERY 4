@@ -1,0 +1,48 @@
+#importing packages
+!pip install squarify
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import folium
+import squarify
+
+#Import dataset
+df=pd.read_csv('/content/Inventry_Management_Dataset.csv')
+df.head()
+
+#Year wise price using the line graph
+ad = pd.DataFrame({
+    'price': [15.5136, 27.7494, 35.7390, 49.4114],
+   }, index=['2011', '2012', '2013', '2014'])
+lines = ad.plot.line()
+
+#Year wise stock using the line graph
+da = pd.DataFrame({
+    'stock': [3923, 157, 3437, 4284],
+   }, index=['2011', '2012', '2013', '2014'])
+lines = da.plot.line()
+
+#Top 10 sales by year using line graph
+top_10 = df.nlargest(10, ['Venda(sales)'])
+top_10
+da = pd.DataFrame({
+    'stock': [8936, 4948, 3336, 3284, 3524, 526, 704, 208, 744, 237],
+   }, index=['2013', '2014', '2014', '2013','2012','2013','2013', '2011', '2014', '2014'])
+lines = da.plot.line()
+
+#Monthly sales using tree map
+sales = [6879, 7832, 998, 778, 262, 2252, 3892, 6388, 257]
+month = ["Jan", "Feb", "March", "April", "May", "June", "July", "Aug"
+               "Sep", "Oct", "Nov", "Dec"]
+squarify.plot(sales, label=month, alpha=0.7)
+plt.axis("off")
+
+#Monthly revenue by pie chart
+dh = pd.DataFrame({'month' : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July',
+                              'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                   'Revenue': [4613.85, 10, 10, 840.778, 10.4872, 26.2156,
+                               96.8784, 20, 5659.377, 25595.68, 90877.41, 44.9744]
+                   })
+
+dh.groupby(['month']).sum().plot(kind='pie', y='Revenue', startangle=60, figsize=(11,6), autopct='%1.0f%%', pctdistance=1.1, labeldistance=1.2)
